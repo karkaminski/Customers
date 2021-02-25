@@ -11,10 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import de.codecrafters.tableview.model.TableColumnWeightModel;
 import pl.karkaminski.customers.database.CustomerClassification;
-import pl.karkaminski.customers.database.CustomersRepository;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
 
 public class ClassificationsFragment extends Fragment {
@@ -22,37 +23,33 @@ public class ClassificationsFragment extends Fragment {
     private ClassificationsViewModel mViewModel;
     private ClassificationsFragmentBinding binding = null;
 
-    public static ClassificationsFragment newInstance() {
-        return new ClassificationsFragment();
-    }
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        binding = ClassificationsFragmentBinding.inflate(inflater, container, false);
 
-        CustomersRepository repository = new CustomersRepository(getActivity().getApplication());
-        repository.getAllCustomerClassifications().observe(getViewLifecycleOwner(), new Observer<List<CustomerClassification>>() {
+        binding = ClassificationsFragmentBinding.inflate(inflater, container, false);
+        mViewModel = new ViewModelProvider(this).get(ClassificationsViewModel.class);
+
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(3);
+        columnModel.setColumnWeight(0, 1);
+        columnModel.setColumnWeight(1, 4);
+        columnModel.setColumnWeight(2, 6);
+        binding.tableView.setColumnModel(columnModel);
+
+        List<CustomerClassification> customerClassifications = new ArrayList<>();
+        CustomerClassificationTableDataAdapter adapter = new CustomerClassificationTableDataAdapter(getContext(), customerClassifications);
+        binding.tableView.setDataAdapter(adapter);
+
+        mViewModel.getAllCustomerClassifications().observe(getViewLifecycleOwner(), new Observer<List<CustomerClassification>>() {
             @Override
             public void onChanged(List<CustomerClassification> customerClassifications) {
-                String cc = "";
-                for(CustomerClassification singleClassification : customerClassifications){
-                    cc = cc + singleClassification.getId() + " ";
-                    cc = cc + singleClassification.getName() + " ";
-                    cc = cc + singleClassification.getDescription() + "\n";
-                }
-                binding.textView.setText(cc);
+                adapter.clear();
+                adapter.addAll(customerClassifications);
+                adapter.notifyDataSetChanged();
             }
         });
 
         return binding.getRoot();
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(ClassificationsViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     @Override

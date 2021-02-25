@@ -58,5 +58,9 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:1.0.0-alpha08"
 
+    //SortableTableView
+    def table_version = "2.8.0"
+    implementation "de.codecrafters.tableview:tableview:$table_version"
+
 
 }
