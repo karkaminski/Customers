@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 
 import pl.karkaminski.customers.R;
 
-public class Customers extends Fragment {
+public class CustomersFragment extends Fragment {
 
     private CustomersViewModel mViewModel;
 
-    public static Customers newInstance() {
-        return new Customers();
+    public static CustomersFragment newInstance() {
+        return new CustomersFragment();
     }
 
     @Override
@@ -27,6 +27,7 @@ public class Customers extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.customers_fragment, container, false);
     }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
