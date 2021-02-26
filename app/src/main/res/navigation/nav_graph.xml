@@ -19,10 +19,18 @@
 
     <fragment
         android:id="@+id/addClassificationFragment"
-        android:name="pl.karkaminski.customers.ui.classificationsadd.AddClassificationFragment"
+        android:name="pl.karkaminski.customers.ui.classificationsaddedit.AddEditClassificationFragment"
         android:label="add_classification_fragment"
-        tools:layout="@layout/add_classification_fragment">
+        tools:layout="@layout/add_edit_classification_fragment">
 
 
+        <argument
+            android:name="CustomerClassification"
+            app:argType="pl.karkaminski.customers.database.CustomerClassification"
+            app:nullable="true" />
+        <argument
+            android:name="message"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
 </navigation>

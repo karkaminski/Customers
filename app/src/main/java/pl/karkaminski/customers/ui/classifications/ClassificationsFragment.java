@@ -12,17 +12,22 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
 
 public class ClassificationsFragment extends Fragment {
+
+    public static final int ADD_ELEMENT = 1;
+    public static final int EDIT_ELEMENT = 2;
 
     public static final String[] TABLE_HEADERS = {"ID", "Name", "Description"};
 
@@ -62,14 +67,26 @@ public class ClassificationsFragment extends Fragment {
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavDirections action = ClassificationsFragmentDirections
-                        .actionClassificationsFragmentToAddClassificationFragment();
-                Navigation.findNavController(view).navigate(action);
+                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
+                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(null);
+                action.setMessage(ADD_ELEMENT);
+                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+            }
+        });
+
+        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
+            @Override
+            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
+                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
+                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(clickedData);
+                action.setMessage(EDIT_ELEMENT);
+                NavHostFragment.findNavController(getParentFragment()).navigate(action);
             }
         });
 
         return binding.getRoot();
     }
+
 
     @Override
     public void onDestroy() {
@@ -77,7 +94,7 @@ public class ClassificationsFragment extends Fragment {
         binding = null;
     }
 
-    private static class ClassificationNameComparator implements Comparator<CustomerClassification>{
+    private static class ClassificationNameComparator implements Comparator<CustomerClassification> {
         @Override
         public int compare(CustomerClassification cc1, CustomerClassification cc2) {
             return cc1.getName().compareTo(cc2.getName());

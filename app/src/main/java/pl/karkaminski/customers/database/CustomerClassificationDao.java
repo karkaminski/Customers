@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -17,8 +18,9 @@ public interface CustomerClassificationDao {
     @Insert
     void insert(CustomerClassification... customerClassification);
 
+    @Update
+    void update(CustomerClassification customerClassification);
+
     @Delete
     void delete(CustomerClassification customerClassification);
-
-
 }

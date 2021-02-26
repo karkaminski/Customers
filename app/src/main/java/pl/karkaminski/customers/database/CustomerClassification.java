@@ -1,5 +1,8 @@
 package pl.karkaminski.customers.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,7 +10,7 @@ import androidx.room.PrimaryKey;
 import org.jetbrains.annotations.NotNull;
 
 @Entity(tableName = "CustomerClassifications")
-public class CustomerClassification {
+public class CustomerClassification implements Parcelable{
 
     @NotNull
     @PrimaryKey(autoGenerate = true)
@@ -28,6 +31,36 @@ public class CustomerClassification {
     public CustomerClassification(@NotNull String name, String description) {
         this.name = name;
         this.description = description;
+    }
+
+    protected CustomerClassification(Parcel in) {
+        id = in.readInt();
+        name = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<CustomerClassification> CREATOR = new Creator<CustomerClassification>() {
+        @Override
+        public CustomerClassification createFromParcel(Parcel in) {
+            return new CustomerClassification(in);
+        }
+
+        @Override
+        public CustomerClassification[] newArray(int size) {
+            return new CustomerClassification[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
     }
 
     public int getId() {
@@ -53,4 +86,5 @@ public class CustomerClassification {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
