@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -54,6 +56,15 @@ public class ClassificationsFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customerClassifications);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NavDirections action = ClassificationsFragmentDirections
+                        .actionClassificationsFragmentToAddClassificationFragment();
+                Navigation.findNavController(view).navigate(action);
             }
         });
 

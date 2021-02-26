@@ -11,5 +11,18 @@
         android:label="classifications_fragment"
         tools:layout="@layout/classifications_fragment">
 
+        <action
+            android:id="@+id/action_classificationsFragment_to_addClassificationFragment"
+            app:destination="@id/addClassificationFragment" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/addClassificationFragment"
+        android:name="pl.karkaminski.customers.ui.classificationsadd.AddClassificationFragment"
+        android:label="add_classification_fragment"
+        tools:layout="@layout/add_classification_fragment">
+
+
     </fragment>
 </navigation>
