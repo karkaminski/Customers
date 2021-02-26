@@ -8,26 +8,26 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import de.codecrafters.tableview.listeners.TableDataClickListener;
+import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
+import pl.karkaminski.customers.ui.classificationsaddedit.AddEditClassificationFragment;
 
 public class ClassificationsFragment extends Fragment {
 
-    public static final int ADD_ELEMENT = 1;
-    public static final int EDIT_ELEMENT = 2;
+    public static final String ADD_ELEMENT = "add_customer_classification_item";
+    public static final String EDIT_ELEMENT = "remove_customer_classification_item";
 
     public static final String[] TABLE_HEADERS = {"ID", "Name", "Description"};
 
@@ -74,13 +74,40 @@ public class ClassificationsFragment extends Fragment {
             }
         });
 
-        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
+        binding.tableView.addDataLongClickListener(new TableDataLongClickListener<CustomerClassification>() {
             @Override
-            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
+            public boolean onDataLongClicked(int rowIndex, CustomerClassification clickedData) {
                 ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
                         ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(clickedData);
                 action.setMessage(EDIT_ELEMENT);
                 NavHostFragment.findNavController(getParentFragment()).navigate(action);
+                return true;
+            }
+        });
+
+//        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
+//            @Override
+//            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
+//                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
+//                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(clickedData);
+//                action.setMessage(EDIT_ELEMENT);
+//                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+//            }
+//        });
+
+        getParentFragmentManager().setFragmentResultListener(ADD_ELEMENT, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
+                mViewModel.insert(cc);
+            }
+        });
+
+        getParentFragmentManager().setFragmentResultListener(EDIT_ELEMENT, this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
+                mViewModel.update(cc);
             }
         });
 

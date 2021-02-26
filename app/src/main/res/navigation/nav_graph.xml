@@ -30,7 +30,7 @@
             app:nullable="true" />
         <argument
             android:name="message"
-            app:argType="integer"
-            android:defaultValue="1" />
+            app:argType="string"
+            android:defaultValue="add_customer_classification_item" />
     </fragment>
 </navigation>

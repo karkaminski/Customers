@@ -24,4 +24,12 @@ public class ClassificationsViewModel extends AndroidViewModel {
     public LiveData<List<CustomerClassification>> getAllCustomerClassifications() {
         return repository.getAllCustomerClassifications();
     }
+
+    public void insert (CustomerClassification customerClassification) {
+        repository.insert(customerClassification);
+    }
+
+    public void update (CustomerClassification customerClassification){
+        repository.update(customerClassification);
+    }
 }
