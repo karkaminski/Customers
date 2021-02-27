@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/classificationsFragment">
+    app:startDestination="@id/customersFragment">
 
     <fragment
         android:id="@+id/classificationsFragment"
@@ -32,5 +32,14 @@
             android:name="message"
             app:argType="string"
             android:defaultValue="add_customer_classification_item" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/customersFragment"
+        android:name="pl.karkaminski.customers.ui.customers.CustomersFragment"
+        android:label="customers_fragment"
+        tools:layout="@layout/customers_fragment">
+
     </fragment>
 </navigation>

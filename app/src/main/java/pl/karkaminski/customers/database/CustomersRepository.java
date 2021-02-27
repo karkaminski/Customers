@@ -10,16 +10,17 @@ import java.util.List;
 public class CustomersRepository {
 
     private CustomerClassificationDao customerClassificationDao;
-    private LiveData<List<CustomerClassification>> allCustomerClassifications;
+    private CustomerDao customerDao;
 
     public CustomersRepository(Application application) {
         CustomersDatabase database = CustomersDatabase.getInstance(application);
         customerClassificationDao = database.customerClassificationDao();
-        allCustomerClassifications = customerClassificationDao.getAll();
+        customerDao = database.customerDao();
     }
 
+    ////Customers Classifications
     public LiveData<List<CustomerClassification>> getAllCustomerClassifications() {
-        return allCustomerClassifications;
+        return customerClassificationDao.getAll();
     }
 
     public void insert(CustomerClassification... customerClassifications){
@@ -30,6 +31,16 @@ public class CustomersRepository {
         new UpdateCustomerClassificationsAsyncTask(customerClassificationDao).execute(customerClassification);
     }
 
+    ////Customers
+    public LiveData<List<Customer>> getAllCustomers() {
+        return customerDao.getAll();
+    }
+
+    public void insert(Customer... customers){
+        new InsertCustomersAsyncTask(customerDao).execute(customers);
+    }
+
+    ////Async Tasks
     private static class InsertCustomerClassificationsAsyncTask extends AsyncTask<CustomerClassification, Void, Void> {
 
         private CustomerClassificationDao dao;
@@ -56,6 +67,21 @@ public class CustomersRepository {
         @Override
         protected Void doInBackground(CustomerClassification... customerClassifications) {
             dao.update(customerClassifications[0]);
+            return null;
+        }
+    }
+
+    private static class InsertCustomersAsyncTask extends AsyncTask<Customer, Void, Void> {
+
+        private CustomerDao dao;
+
+        public InsertCustomersAsyncTask(CustomerDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Customer... customers) {
+            dao.insert(customers);
             return null;
         }
     }

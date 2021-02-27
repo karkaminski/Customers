@@ -1,0 +1,19 @@
+package pl.karkaminski.customers.database;
+
+import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+
+import java.util.List;
+
+@Dao
+public interface CustomerDao {
+
+    @Query("SELECT * FROM Customers")
+    LiveData<List<Customer>> getAll();
+
+    @Insert
+    void insert(Customer... customers);
+
+}

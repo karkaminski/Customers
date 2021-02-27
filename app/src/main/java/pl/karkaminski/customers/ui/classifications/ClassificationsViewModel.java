@@ -14,7 +14,6 @@ import pl.karkaminski.customers.database.CustomersRepository;
 public class ClassificationsViewModel extends AndroidViewModel {
 
     private CustomersRepository repository;
-    private LiveData<List<CustomerClassification>> allClassifications;
 
     public ClassificationsViewModel(@NonNull Application application) {
         super(application);
