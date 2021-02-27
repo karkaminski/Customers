@@ -41,5 +41,20 @@
         android:label="customers_fragment"
         tools:layout="@layout/customers_fragment">
 
+        <action
+            android:id="@+id/action_customersFragment_to_addCustomerFragment"
+            app:destination="@id/addCustomerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/addCustomerFragment"
+        android:name="pl.karkaminski.customers.ui.customersaddedit.AddEditCustomerFragment"
+        android:label="add_customers_fragment"
+        tools:layout="@layout/add_edit_customer_fragment">
+
+        <argument
+            android:name="message"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

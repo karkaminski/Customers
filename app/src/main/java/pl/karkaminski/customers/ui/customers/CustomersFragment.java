@@ -1,27 +1,23 @@
 package pl.karkaminski.customers.ui.customers;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
-import pl.karkaminski.customers.R;
-import pl.karkaminski.customers.database.Customer;
 import pl.karkaminski.customers.database.CustomerWithClassification;
-import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
 import pl.karkaminski.customers.databinding.CustomersFragmentBinding;
 
 public class CustomersFragment extends Fragment {
@@ -60,6 +56,16 @@ public class CustomersFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customers);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomersFragmentDirections.ActionCustomersFragmentToAddCustomerFragment action =
+                        CustomersFragmentDirections.actionCustomersFragmentToAddCustomerFragment("");
+
+                NavHostFragment.findNavController(getParentFragment()).navigate(action);
             }
         });
 
