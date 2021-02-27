@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Date;
+
 @Entity(tableName = "Customers")
 public class Customer {
 
@@ -24,6 +26,9 @@ public class Customer {
 
     @ColumnInfo(name = "City")
     private String city;
+
+    @ColumnInfo(name = "DateTime")
+    private Date dateTime;
 
     //Room requires this
     public Customer() {
@@ -67,5 +72,13 @@ public class Customer {
 
     public void setNip(String nip) {
         this.nip = nip;
+    }
+
+    public Date getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(Date dateTime) {
+        this.dateTime = dateTime;
     }
 }

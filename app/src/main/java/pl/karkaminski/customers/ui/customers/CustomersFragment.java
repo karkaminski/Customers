@@ -25,7 +25,7 @@ import pl.karkaminski.customers.databinding.CustomersFragmentBinding;
 
 public class CustomersFragment extends Fragment {
 
-    public static final String[] TABLE_HEADERS = {"ID", "Name", "NIP", "City"};
+    public static final String[] TABLE_HEADERS = {"ID", "Name", "NIP", "City", "Date and Time"};
 
     private CustomersViewModel mViewModel;
     private CustomersFragmentBinding binding = null;
@@ -37,11 +37,12 @@ public class CustomersFragment extends Fragment {
         binding = CustomersFragmentBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(CustomersViewModel.class);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(4);
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(5);
         columnModel.setColumnWeight(0, 3);
         columnModel.setColumnWeight(1, 4);
         columnModel.setColumnWeight(2, 4);
         columnModel.setColumnWeight(3, 4);
+        columnModel.setColumnWeight(4, 4);
         binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
 
         binding.tableView.setColumnModel(columnModel);

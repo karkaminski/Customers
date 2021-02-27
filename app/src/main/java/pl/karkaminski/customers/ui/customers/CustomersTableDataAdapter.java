@@ -29,10 +29,19 @@ public class CustomersTableDataAdapter extends TableDataAdapter<Customer> {
                 textView.setText(getItem(rowIndex).getName());
                 break;
             case 2:
-                textView.setText(getItem(rowIndex).getNip());
+                textView.setText(
+                        getItem(rowIndex).getNip() != null ? getItem(rowIndex).getNip() : "- - -"
+                );
                 break;
             case 3:
-                textView.setText(getItem(rowIndex).getCity());
+                textView.setText(
+                        getItem(rowIndex).getCity() != null ? getItem(rowIndex).getCity() : "- - -"
+                );
+                break;
+            case 4:
+                textView.setText(
+                        getItem(rowIndex).getDateTime() != null ? getItem(rowIndex).getDateTime().toString() : "- - -"
+                );
                 break;
         }
 

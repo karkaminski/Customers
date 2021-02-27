@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Database(entities = {CustomerClassification.class, Customer.class}, version = 1)
+@TypeConverters({Converters.class})
 public abstract class CustomersDatabase extends RoomDatabase {
 
     public static final String DATABASE_NAME = "customers.db";
@@ -64,6 +67,9 @@ public abstract class CustomersDatabase extends RoomDatabase {
             exampleCustomers.add(new Customer("Karol Kamiński", "1111", "Kraków"));
             exampleCustomers.add(new Customer("Jan Kowalski", "2222","Warszawa"));
             exampleCustomers.add(new Customer("Anna Nowak", "3333", "Gdańsk"));
+            Customer customerWithDate = new Customer("Tomasz Kwiatkowski", "6666", "Częstochowa");
+            customerWithDate.setDateTime(new Date(System.currentTimeMillis()));
+            exampleCustomers.add(customerWithDate);
             customerDao.insert(exampleCustomers.toArray(new Customer[exampleCustomers.size()]));
             return null;
         }
