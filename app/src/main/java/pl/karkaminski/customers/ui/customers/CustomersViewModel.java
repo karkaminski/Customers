@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import pl.karkaminski.customers.database.Customer;
+import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.database.CustomersRepository;
 
 public class CustomersViewModel extends AndroidViewModel {
@@ -22,5 +23,9 @@ public class CustomersViewModel extends AndroidViewModel {
 
     public LiveData<List<Customer>> getAllCustomers(){
         return customersRepository.getAllCustomers();
+    }
+
+    public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
+        return customersRepository.getAllCustomersWithClassification();
     }
 }

@@ -36,6 +36,10 @@ public class CustomersRepository {
         return customerDao.getAll();
     }
 
+    public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
+        return customerDao.getAllWithClassification();
+    }
+
     public void insert(Customer... customers){
         new InsertCustomersAsyncTask(customerDao).execute(customers);
     }

@@ -13,6 +13,9 @@ public interface CustomerDao {
     @Query("SELECT * FROM Customers")
     LiveData<List<Customer>> getAll();
 
+    @Query("SELECT * FROM Customers")
+    LiveData<List<CustomerWithClassification>> getAllWithClassification();
+
     @Insert
     void insert(Customer... customers);
 

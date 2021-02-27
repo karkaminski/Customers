@@ -64,10 +64,11 @@ public abstract class CustomersDatabase extends RoomDatabase {
             exampleClassifications.add(new CustomerClassification("Poker player buyer", "These are relationship or value buyers who have learned that if they act like a price buyer, they can get high value for low prices."));
             classificationDao.insert(exampleClassifications.toArray(new CustomerClassification[exampleClassifications.size()]));
 
-            exampleCustomers.add(new Customer("Karol Kamiński", "1111", "Kraków"));
-            exampleCustomers.add(new Customer("Jan Kowalski", "2222","Warszawa"));
-            exampleCustomers.add(new Customer("Anna Nowak", "3333", "Gdańsk"));
-            Customer customerWithDate = new Customer("Tomasz Kwiatkowski", "6666", "Częstochowa");
+            exampleCustomers.add(new Customer(1,"Karol Kamiński", "1111", "Kraków"));
+            exampleCustomers.add(new Customer(2,"Jan Kowalski", "2222","Warszawa"));
+            exampleCustomers.add(new Customer(3,"Anna Nowak", "3333", "Gdańsk"));
+            exampleCustomers.add(new Customer(18,"Bartos ADamczyk", "9999", "Torun"));
+            Customer customerWithDate = new Customer(3,"Tomasz Kwiatkowski", "6666", "Częstochowa");
             customerWithDate.setDateTime(new Date(System.currentTimeMillis()));
             exampleCustomers.add(customerWithDate);
             customerDao.insert(exampleCustomers.toArray(new Customer[exampleCustomers.size()]));

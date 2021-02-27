@@ -3,6 +3,7 @@ package pl.karkaminski.customers.database;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import org.jetbrains.annotations.NotNull;
@@ -16,6 +17,10 @@ public class Customer {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "CustomerId")
     private int id;
+
+    @ForeignKey(entity = CustomerClassification.class, parentColumns = "ClassificationId", childColumns = "ClassificationId", onDelete = ForeignKey.CASCADE)
+    @ColumnInfo(name = "ClassificationId")
+    private int classificationId;
 
     @NotNull
     @ColumnInfo(name = "Name")
@@ -34,7 +39,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(@NotNull String name, String nip, String city) {
+    public Customer(int classificationId, @NotNull String name, String nip, String city) {
+        this.classificationId = classificationId;
         this.name = name;
         this.nip = nip;
         this.city = city;
@@ -80,5 +86,13 @@ public class Customer {
 
     public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getClassificationId() {
+        return classificationId;
+    }
+
+    public void setClassificationId(int classificationId) {
+        this.classificationId = classificationId;
     }
 }
