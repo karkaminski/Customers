@@ -53,8 +53,12 @@
         tools:layout="@layout/add_edit_customer_fragment">
 
         <argument
+            android:name="Customer"
+            app:argType="pl.karkaminski.customers.database.CustomerWithClassification"
+            app:nullable="true" />
+        <argument
             android:name="message"
             app:argType="string"
-            app:nullable="true" />
+            android:defaultValue="add_customer_item" />
     </fragment>
 </navigation>

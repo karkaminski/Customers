@@ -27,7 +27,7 @@ public class AddEditClassificationFragment extends Fragment {
 
         binding = AddEditClassificationFragmentBinding.inflate(inflater, container, false);
 
-        CustomerClassification customerClassification = new CustomerClassification();
+        CustomerClassification customerClassification;
 
         if (getArguments() != null) {
 

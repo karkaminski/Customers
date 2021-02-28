@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import de.codecrafters.tableview.listeners.TableDataClickListener;
 import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
@@ -85,15 +86,12 @@ public class ClassificationsFragment extends Fragment {
             }
         });
 
-//        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
-//            @Override
-//            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
-//                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
-//                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(clickedData);
-//                action.setMessage(EDIT_ELEMENT);
-//                NavHostFragment.findNavController(getParentFragment()).navigate(action);
-//            }
-//        });
+        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
+            @Override
+            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
+                //TODO ??? Show details of CustomerClassification ???
+            }
+        });
 
         getParentFragmentManager().setFragmentResultListener(ADD_ELEMENT, this, new FragmentResultListener() {
             @Override
