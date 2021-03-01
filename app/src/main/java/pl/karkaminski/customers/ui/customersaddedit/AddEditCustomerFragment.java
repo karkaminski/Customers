@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,6 +29,7 @@ import pl.karkaminski.customers.databinding.AddEditClassificationFragmentBinding
 import pl.karkaminski.customers.databinding.AddEditCustomerFragmentBinding;
 import pl.karkaminski.customers.ui.SharedViewModel;
 import pl.karkaminski.customers.ui.customers.CustomersFragment;
+import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
 public class AddEditCustomerFragment extends Fragment {
 
@@ -52,7 +54,8 @@ public class AddEditCustomerFragment extends Fragment {
                 android.R.layout.simple_spinner_dropdown_item,
                 customerClassifications
         );
-        binding.spinnerClassification.setAdapter(adapter);
+
+        binding.spinnerTextView.setAdapter(adapter);
 
         mViewModel.getAllCustomerClassifications().observe(getViewLifecycleOwner(), new Observer<List<CustomerClassification>>() {
             @Override
@@ -60,6 +63,15 @@ public class AddEditCustomerFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customerClassifications);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        binding.buttonAddClassification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddEditCustomerFragmentDirections.ActionAddCustomerFragmentToAddClassificationFragment action =
+                        AddEditCustomerFragmentDirections.actionAddCustomerFragmentToAddClassificationFragment(null);
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
             }
         });
 
