@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.databinding.CustomersFragmentBinding;
+import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
 public class CustomersFragment extends Fragment {
 
@@ -68,21 +70,22 @@ public class CustomersFragment extends Fragment {
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomersFragmentDirections.ActionCustomersFragmentToAddCustomerFragment action =
-                        CustomersFragmentDirections.actionCustomersFragmentToAddCustomerFragment(null);
+                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddCustomerFragment action =
+                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddCustomerFragment(null);
+                action.setMessage(ADD_ELEMENT);
 
-                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
             }
         });
 
         binding.tableView.addDataLongClickListener(new TableDataLongClickListener<CustomerWithClassification>() {
             @Override
             public boolean onDataLongClicked(int rowIndex, CustomerWithClassification clickedData) {
-                CustomersFragmentDirections.ActionCustomersFragmentToAddCustomerFragment action =
-                        CustomersFragmentDirections.actionCustomersFragmentToAddCustomerFragment(clickedData);
+                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddCustomerFragment action =
+                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddCustomerFragment(clickedData);
                 action.setMessage(EDIT_ELEMENT);
 
-                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
                 return true;
             }
         });

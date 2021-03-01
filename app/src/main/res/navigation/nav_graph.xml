@@ -3,18 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/customersFragment">
-
-    <fragment
-        android:id="@+id/classificationsFragment"
-        android:name="pl.karkaminski.customers.ui.classifications.ClassificationsFragment"
-        android:label="classifications_fragment"
-        tools:layout="@layout/classifications_fragment">
-
-        <action
-            android:id="@+id/action_classificationsFragment_to_addClassificationFragment"
-            app:destination="@id/addClassificationFragment" />
-    </fragment>
+    app:startDestination="@id/viewPagerFragment">
 
 
     <fragment
@@ -36,17 +25,6 @@
 
 
     <fragment
-        android:id="@+id/customersFragment"
-        android:name="pl.karkaminski.customers.ui.customers.CustomersFragment"
-        android:label="customers_fragment"
-        tools:layout="@layout/customers_fragment">
-
-        <action
-            android:id="@+id/action_customersFragment_to_addCustomerFragment"
-            app:destination="@id/addCustomerFragment" />
-    </fragment>
-
-    <fragment
         android:id="@+id/addCustomerFragment"
         android:name="pl.karkaminski.customers.ui.customersaddedit.AddEditCustomerFragment"
         android:label="add_customers_fragment"
@@ -60,5 +38,19 @@
             android:name="message"
             app:argType="string"
             android:defaultValue="add_customer_item" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/viewPagerFragment"
+        android:name="pl.karkaminski.customers.ui.mainview.ViewPagerFragment"
+        android:label="view_pager_fragment"
+        tools:layout="@layout/view_pager_fragment">
+
+        <action
+            android:id="@+id/action_viewPagerFragment_to_addClassificationFragment"
+            app:destination="@id/addClassificationFragment" />
+        <action
+            android:id="@+id/action_viewPagerFragment_to_addCustomerFragment"
+            app:destination="@id/addCustomerFragment" />
     </fragment>
 </navigation>

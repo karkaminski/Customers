@@ -24,6 +24,7 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
 import pl.karkaminski.customers.ui.classificationsaddedit.AddEditClassificationFragment;
+import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
 public class ClassificationsFragment extends Fragment {
 
@@ -68,20 +69,22 @@ public class ClassificationsFragment extends Fragment {
         binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
-                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(null);
+                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
+                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(null);
                 action.setMessage(ADD_ELEMENT);
-                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
             }
         });
 
         binding.tableView.addDataLongClickListener(new TableDataLongClickListener<CustomerClassification>() {
             @Override
             public boolean onDataLongClicked(int rowIndex, CustomerClassification clickedData) {
-                ClassificationsFragmentDirections.ActionClassificationsFragmentToAddClassificationFragment action =
-                        ClassificationsFragmentDirections.actionClassificationsFragmentToAddClassificationFragment(clickedData);
+                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
+                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(clickedData);
                 action.setMessage(EDIT_ELEMENT);
-                NavHostFragment.findNavController(getParentFragment()).navigate(action);
+
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
                 return true;
             }
         });
