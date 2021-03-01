@@ -95,22 +95,6 @@ public class ClassificationsFragment extends Fragment {
             }
         });
 
-        getParentFragmentManager().setFragmentResultListener(ADD_ELEMENT, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
-                mViewModel.insertClassification(cc);
-            }
-        });
-
-        getParentFragmentManager().setFragmentResultListener(EDIT_ELEMENT, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
-                mViewModel.updateClassification(cc);
-            }
-        });
-
         return binding.getRoot();
     }
 

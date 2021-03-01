@@ -9,31 +9,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.AddEditClassificationFragmentBinding;
+import pl.karkaminski.customers.ui.SharedViewModel;
 import pl.karkaminski.customers.ui.classifications.ClassificationsFragment;
 
 public class AddEditClassificationFragment extends Fragment {
 
-    public static final String BUNDLE_KEY = "customer_classification";
-
     private AddEditClassificationFragmentBinding binding = null;
     private AddEditClassificationFragmentArgs args;
+    private SharedViewModel mViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
         binding = AddEditClassificationFragmentBinding.inflate(inflater, container, false);
-
-        CustomerClassification customerClassification;
+        mViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if (getArguments() != null) {
-
             args = AddEditClassificationFragmentArgs.fromBundle(getArguments());
-
             if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
+                final CustomerClassification customerClassification;
                 customerClassification = args.getCustomerClassification();
                 binding.editTextName.setText(customerClassification.getName());
                 binding.editTextDescription.setText(customerClassification.getDescription());
@@ -58,15 +57,17 @@ public class AddEditClassificationFragment extends Fragment {
             return;
         }
 
-        CustomerClassification cc = new CustomerClassification();
+        final CustomerClassification cc = new CustomerClassification();
         cc.setName(name);
         cc.setDescription(description);
-        if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT){
+
+        if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
             cc.setId(args.getCustomerClassification().getId());
+            mViewModel.updateClassification(cc);
         }
-        Bundle result = new Bundle();
-        result.putParcelable(BUNDLE_KEY, cc);
-        getParentFragmentManager().setFragmentResult(args.getMessage(), result);
+        if (args.getMessage() == ClassificationsFragment.ADD_ELEMENT) {
+            mViewModel.insertClassification(cc);
+        }
         getActivity().onBackPressed();
     }
 }
