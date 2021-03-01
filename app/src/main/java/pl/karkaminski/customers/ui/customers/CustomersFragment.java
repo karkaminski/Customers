@@ -15,6 +15,7 @@ import androidx.navigation.NavDirections;
 import androidx.navigation.fragment.NavHostFragment;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import de.codecrafters.tableview.listeners.TableDataClickListener;
@@ -31,7 +32,7 @@ public class CustomersFragment extends Fragment {
     public static final String ADD_ELEMENT = "add_customer_item";
     public static final String EDIT_ELEMENT = "remove_customer_item";
 
-    public static final String[] TABLE_HEADERS = {"Name", "Classification","Date"};
+    public static final String[] TABLE_HEADERS = {"Name", "Classification", "Date"};
 
     private SharedViewModel mViewModel;
     private CustomersFragmentBinding binding = null;
@@ -47,9 +48,11 @@ public class CustomersFragment extends Fragment {
         columnModel.setColumnWeight(0, 1);
         columnModel.setColumnWeight(1, 1);
         columnModel.setColumnWeight(2, 1);
-        binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
-
         binding.tableView.setColumnModel(columnModel);
+        binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
+        binding.tableView.setColumnComparator(0, new CustomerNameComparator());
+        binding.tableView.setColumnComparator(1, new CustomerClassificationComparator());
+        binding.tableView.setColumnComparator(2, new CustomerDateComparator());
         binding.tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), TABLE_HEADERS));
 
         List<CustomerWithClassification> customers = new ArrayList<>();
@@ -88,7 +91,7 @@ public class CustomersFragment extends Fragment {
             }
         });
 
-        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerWithClassification> () {
+        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerWithClassification>() {
             @Override
             public void onDataClicked(int rowIndex, CustomerWithClassification clickedData) {
                 //TODO show details of CustomerWithClassification
@@ -116,5 +119,44 @@ public class CustomersFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         binding = null;
+    }
+
+    private static class CustomerNameComparator implements Comparator<CustomerWithClassification> {
+        @Override
+        public int compare(CustomerWithClassification customer1, CustomerWithClassification customer2) {
+            return customer1.getCustomer().getName().compareTo(
+                    customer2.getCustomer().getName()
+            );
+        }
+    }
+
+    private static class CustomerClassificationComparator implements Comparator<CustomerWithClassification> {
+        @Override
+        public int compare(CustomerWithClassification customer1, CustomerWithClassification customer2) {
+            if (customer1.getCustomerClassification() == null) {
+                return 1;
+            }
+            if (customer2.getCustomerClassification() == null) {
+                return -1;
+            }
+            return customer1.getCustomerClassification().getName().compareTo(
+                    customer2.getCustomerClassification().getName()
+            );
+        }
+    }
+
+    private static class CustomerDateComparator implements Comparator<CustomerWithClassification> {
+        @Override
+        public int compare(CustomerWithClassification customer1, CustomerWithClassification customer2) {
+            if (customer1.getCustomer().getDateTime() == null) {
+                return 1;
+            }
+            if (customer2.getCustomer().getDateTime() == null) {
+                return -1;
+            }
+            return customer1.getCustomer().getDateTime().compareTo(
+                    customer2.getCustomer().getDateTime()
+            );
+        }
     }
 }

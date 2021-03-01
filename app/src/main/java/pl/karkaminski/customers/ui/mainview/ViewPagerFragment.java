@@ -1,6 +1,7 @@
 package pl.karkaminski.customers.ui.mainview;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,11 @@ public class ViewPagerFragment extends Fragment {
             }
 
             @Override
+            public void restoreState(@Nullable Parcelable state, @Nullable ClassLoader loader) {
+
+            }
+
+            @Override
             public int getCount() {
                 return 2;
             }
@@ -61,8 +67,11 @@ public class ViewPagerFragment extends Fragment {
                         return null;
                 }
             }
+
+
+
         });
-        
+
         return binding.getRoot();
     }
 

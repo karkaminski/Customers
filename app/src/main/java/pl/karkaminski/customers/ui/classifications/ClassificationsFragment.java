@@ -48,8 +48,8 @@ public class ClassificationsFragment extends Fragment {
         columnModel.setColumnWeight(0, 1);
         columnModel.setColumnWeight(1, 2);
         binding.tableView.setColumnModel(columnModel);
-        binding.tableView.setColumnComparator(0, new ClassificationNameComparator());
         binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
+        binding.tableView.setColumnComparator(0, new ClassificationNameComparator());
         binding.tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), TABLE_HEADERS));
 
         List<CustomerClassification> customerClassifications = new ArrayList<>();
