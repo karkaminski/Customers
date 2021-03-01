@@ -26,30 +26,19 @@ public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClas
 
         switch (columnIndex) {
             case 0:
-                textView.setText(String.valueOf(getItem(rowIndex).getCustomer().getId()));
-                break;
-            case 1:
                 textView.setText(getItem(rowIndex).getCustomer().getName());
                 break;
-            case 2:
+            case 1:
                 textView.setText(
                         getItem(rowIndex).getCustomerClassification() != null ? String.valueOf(getItem(rowIndex).getCustomerClassification().getName()) : EMPTY_CELL
                 );
                 break;
-            case 3:
-                textView.setText(
-                        getItem(rowIndex).getCustomer().getNip() != null ? getItem(rowIndex).getCustomer().getNip() : EMPTY_CELL);
-                break;
-            case 4:
-                textView.setText(
-                        getItem(rowIndex).getCustomer().getCity() != null ? getItem(rowIndex).getCustomer().getCity() : EMPTY_CELL);
-                break;
-            case 5:
+            case 2:
                 if (getItem(rowIndex).getCustomer().getDateTime() != null) {
                     final Date dateTime = getItem(rowIndex).getCustomer().getDateTime();
                     final String dateString = CustomersApplication.globalDateFormat.format(dateTime);
                     textView.setText(dateString);
-                } else textView.setText("- - -");
+                } else textView.setText(EMPTY_CELL);
                 break;
         }
 

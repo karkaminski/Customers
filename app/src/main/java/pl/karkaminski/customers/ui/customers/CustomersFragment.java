@@ -30,7 +30,7 @@ public class CustomersFragment extends Fragment {
     public static final String ADD_ELEMENT = "add_customer_item";
     public static final String EDIT_ELEMENT = "remove_customer_item";
 
-    public static final String[] TABLE_HEADERS = {"ID", "Name", "CC", "NIP", "City", "Date and Time"};
+    public static final String[] TABLE_HEADERS = {"Name", "Classification","Date"};
 
     private CustomersViewModel mViewModel;
     private CustomersFragmentBinding binding = null;
@@ -42,13 +42,10 @@ public class CustomersFragment extends Fragment {
         binding = CustomersFragmentBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(CustomersViewModel.class);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(6);
-        columnModel.setColumnWeight(0, 3);
-        columnModel.setColumnWeight(1, 4);
-        columnModel.setColumnWeight(2, 4);
-        columnModel.setColumnWeight(3, 4);
-        columnModel.setColumnWeight(4, 4);
-        columnModel.setColumnWeight(5, 4);
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(3);
+        columnModel.setColumnWeight(0, 1);
+        columnModel.setColumnWeight(1, 1);
+        columnModel.setColumnWeight(2, 1);
         binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
 
         binding.tableView.setColumnModel(columnModel);
