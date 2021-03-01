@@ -14,6 +14,8 @@ import pl.karkaminski.customers.database.CustomerWithClassification;
 
 public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClassification> {
 
+    public static final String EMPTY_CELL = "---";
+
     public CustomersTableDataAdapter(Context context, List<CustomerWithClassification> data) {
         super(context, data);
     }
@@ -31,18 +33,16 @@ public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClas
                 break;
             case 2:
                 textView.setText(
-                        getItem(rowIndex).getCustomerClassification() != null ? String.valueOf(getItem(rowIndex).getCustomerClassification().getName()) : "- - -"
+                        getItem(rowIndex).getCustomerClassification() != null ? String.valueOf(getItem(rowIndex).getCustomerClassification().getName()) : EMPTY_CELL
                 );
                 break;
             case 3:
                 textView.setText(
-                        getItem(rowIndex).getCustomer().getNip() != null ? getItem(rowIndex).getCustomer().getNip() : "- - -"
-                );
+                        getItem(rowIndex).getCustomer().getNip() != null ? getItem(rowIndex).getCustomer().getNip() : EMPTY_CELL);
                 break;
             case 4:
                 textView.setText(
-                        getItem(rowIndex).getCustomer().getCity() != null ? getItem(rowIndex).getCustomer().getCity() : "- - -"
-                );
+                        getItem(rowIndex).getCustomer().getCity() != null ? getItem(rowIndex).getCustomer().getCity() : EMPTY_CELL);
                 break;
             case 5:
                 if (getItem(rowIndex).getCustomer().getDateTime() != null) {
