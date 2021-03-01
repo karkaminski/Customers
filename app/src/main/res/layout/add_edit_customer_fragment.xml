@@ -59,6 +59,14 @@
             android:layout_height="wrap_content"
             android:text="Date and time" />
 
+        <EditText
+            android:id="@+id/edit_text_date"
+            android:hint="DD/MM/YYYY"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="date"/>
+
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

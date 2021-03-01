@@ -1,10 +1,13 @@
 package pl.karkaminski.customers.ui.customersaddedit;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +17,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +35,8 @@ public class AddEditCustomerFragment extends Fragment {
     private AddEditCustomerViewModel mViewModel;
     private AddEditCustomerFragmentBinding binding = null;
     private AddEditCustomerFragmentArgs args;
+
+    DatePickerDialog picker;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -52,6 +59,28 @@ public class AddEditCustomerFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customerClassifications);
                 adapter.notifyDataSetChanged();
+            }
+        });
+
+        binding.editTextDate.setInputType(InputType.TYPE_NULL);
+        binding.editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+
+                picker = new DatePickerDialog(
+                        getContext(),
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                                binding.editTextDate.setText(dayOfMonth + "/" + month + "/" + year);
+                            }
+                        }, year, month, day);
+
+                picker.show();
             }
         });
 
