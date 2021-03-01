@@ -5,13 +5,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import de.codecrafters.tableview.TableDataAdapter;
+import pl.karkaminski.customers.CustomersApplication;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 
 public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClassification> {
-
 
     public CustomersTableDataAdapter(Context context, List<CustomerWithClassification> data) {
         super(context, data);
@@ -44,9 +45,11 @@ public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClas
                 );
                 break;
             case 5:
-                textView.setText(
-                        getItem(rowIndex).getCustomer().getDateTime() != null ? getItem(rowIndex).getCustomer().getDateTime().toString() : "- - -"
-                );
+                if (getItem(rowIndex).getCustomer().getDateTime() != null) {
+                    final Date dateTime = getItem(rowIndex).getCustomer().getDateTime();
+                    final String dateString = CustomersApplication.globalDateFormat.format(dateTime);
+                    textView.setText(dateString);
+                } else textView.setText("- - -");
                 break;
         }
 
