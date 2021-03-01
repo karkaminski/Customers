@@ -1,4 +1,4 @@
-package pl.karkaminski.customers.ui.customers;
+package pl.karkaminski.customers.ui;
 
 import android.app.Application;
 
@@ -9,14 +9,15 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 import pl.karkaminski.customers.database.Customer;
+import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.database.CustomersRepository;
 
-public class CustomersViewModel extends AndroidViewModel {
+public class SharedViewModel extends AndroidViewModel {
 
     private CustomersRepository customersRepository;
 
-    public CustomersViewModel(@NonNull Application application) {
+    public SharedViewModel(@NonNull Application application) {
         super(application);
         customersRepository = new CustomersRepository(application);
     }
@@ -27,5 +28,17 @@ public class CustomersViewModel extends AndroidViewModel {
 
     public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
         return customersRepository.getAllCustomersWithClassification();
+    }
+
+    public LiveData<List<CustomerClassification>> getAllCustomerClassifications() {
+        return customersRepository.getAllCustomerClassifications();
+    }
+
+    public void insertClassification(CustomerClassification customerClassification) {
+        customersRepository.insert(customerClassification);
+    }
+
+    public void updateClassification(CustomerClassification customerClassification){
+        customersRepository.update(customerClassification);
     }
 }

@@ -23,6 +23,7 @@ import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
+import pl.karkaminski.customers.ui.SharedViewModel;
 import pl.karkaminski.customers.ui.classificationsaddedit.AddEditClassificationFragment;
 import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
@@ -33,7 +34,7 @@ public class ClassificationsFragment extends Fragment {
 
     public static final String[] TABLE_HEADERS = {"Name", "Description"};
 
-    private ClassificationsViewModel mViewModel;
+    private SharedViewModel mViewModel;
     private ClassificationsFragmentBinding binding = null;
 
     @Override
@@ -41,7 +42,7 @@ public class ClassificationsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = ClassificationsFragmentBinding.inflate(inflater, container, false);
-        mViewModel = new ViewModelProvider(this).get(ClassificationsViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         TableColumnWeightModel columnModel = new TableColumnWeightModel(2);
         columnModel.setColumnWeight(0, 1);
@@ -98,7 +99,7 @@ public class ClassificationsFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
-                mViewModel.insert(cc);
+                mViewModel.insertClassification(cc);
             }
         });
 
@@ -106,7 +107,7 @@ public class ClassificationsFragment extends Fragment {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
                 CustomerClassification cc = result.getParcelable(AddEditClassificationFragment.BUNDLE_KEY);
-                mViewModel.update(cc);
+                mViewModel.updateClassification(cc);
             }
         });
 

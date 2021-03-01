@@ -26,13 +26,14 @@ import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.databinding.AddEditClassificationFragmentBinding;
 import pl.karkaminski.customers.databinding.AddEditCustomerFragmentBinding;
+import pl.karkaminski.customers.ui.SharedViewModel;
 import pl.karkaminski.customers.ui.customers.CustomersFragment;
 
 public class AddEditCustomerFragment extends Fragment {
 
     public static final String BUNDLE_KEY = "customer_with_classification";
 
-    private AddEditCustomerViewModel mViewModel;
+    private SharedViewModel mViewModel;
     private AddEditCustomerFragmentBinding binding = null;
     private AddEditCustomerFragmentArgs args;
 
@@ -42,7 +43,7 @@ public class AddEditCustomerFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = AddEditCustomerFragmentBinding.inflate(inflater, container, false);
-        mViewModel = new ViewModelProvider(this).get(AddEditCustomerViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
 
         List<CustomerClassification> customerClassifications = new ArrayList<>();

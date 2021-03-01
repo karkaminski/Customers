@@ -23,6 +23,7 @@ import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.databinding.CustomersFragmentBinding;
+import pl.karkaminski.customers.ui.SharedViewModel;
 import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
 public class CustomersFragment extends Fragment {
@@ -32,7 +33,7 @@ public class CustomersFragment extends Fragment {
 
     public static final String[] TABLE_HEADERS = {"Name", "Classification","Date"};
 
-    private CustomersViewModel mViewModel;
+    private SharedViewModel mViewModel;
     private CustomersFragmentBinding binding = null;
 
     @Override
@@ -40,7 +41,7 @@ public class CustomersFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = CustomersFragmentBinding.inflate(inflater, container, false);
-        mViewModel = new ViewModelProvider(this).get(CustomersViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         TableColumnWeightModel columnModel = new TableColumnWeightModel(3);
         columnModel.setColumnWeight(0, 1);
