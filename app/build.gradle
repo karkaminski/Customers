@@ -63,6 +63,7 @@ dependencies {
     //SortableTableView
     def table_version = "2.8.0"
     implementation "de.codecrafters.tableview:tableview:$table_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 
 }

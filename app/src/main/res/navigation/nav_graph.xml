@@ -53,4 +53,13 @@
             android:id="@+id/action_viewPagerFragment_to_addCustomerFragment"
             app:destination="@id/addCustomerFragment" />
     </fragment>
+
+
+    <fragment
+        android:id="@+id/CustomerClassifications"
+        android:name="pl.karkaminski.customers.ui.classifications.ClassificationsFragment"
+        tools:layout="@layout/classifications_fragment"
+        android:label="classifications_fragment">
+
+    </fragment>
 </navigation>

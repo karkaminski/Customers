@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.google.android.material.tabs.TabLayout;
@@ -26,46 +28,41 @@ public class ViewPagerFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         binding = ViewPagerFragmentBinding.inflate(inflater, container, false);
+        binding.tabLayout.setupWithViewPager(binding.viewPager);
 
-        binding.viewPager.setAdapter(
-                new FragmentStateAdapter(getActivity().getSupportFragmentManager(), getLifecycle()) {
-                    @NonNull
-                    @Override
-                    public Fragment createFragment(int position) {
-
-                        switch (position) {
-                            case 0:
-                                return new CustomersFragment();
-                            case 1:
-                                return new ClassificationsFragment();
-                            default:
-                                return null;
-                        }
-                    }
-
-                    @Override
-                    public int getItemCount() {
-                        return 2;
-                    }
+        binding.viewPager.setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+                switch (position) {
+                    case 0:
+                        return new CustomersFragment();
+                    case 1:
+                        return new ClassificationsFragment();
+                    default:
+                        return null;
                 }
-        );
+            }
 
-        new TabLayoutMediator(binding.tabs, binding.viewPager,
-                new TabLayoutMediator.TabConfigurationStrategy() {
-                    @Override
-                    public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
-                        switch (position) {
-                            case 0:
-                                tab.setText("Customers");
-                                break;
-                            case 1:
-                                tab.setText("Classifications");
-                                break;
-                        }
-                    }
-                }).attach();
+            @Override
+            public int getCount() {
+                return 2;
+            }
 
-
+            @Nullable
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return "Customers";
+                    case 1:
+                        return "Classifications";
+                    default:
+                        return null;
+                }
+            }
+        });
+        
         return binding.getRoot();
     }
 
