@@ -28,7 +28,7 @@
                 android:id="@+id/table_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tableView_columnCount="3" />
+                app:tableView_columnCount="2" />
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

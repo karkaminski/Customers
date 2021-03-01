@@ -22,12 +22,9 @@ public class CustomerClassificationTableDataAdapter extends TableDataAdapter<Cus
 
         switch (columnIndex) {
             case 0:
-                textView.setText(String.valueOf(getItem(rowIndex).getId()));
-                break;
-            case 1:
                 textView.setText(getItem(rowIndex).getName());
                 break;
-            case 2:
+            case 1:
                 textView.setText(getItem(rowIndex).getDescription());
                 break;
         }

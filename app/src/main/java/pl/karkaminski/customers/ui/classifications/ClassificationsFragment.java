@@ -31,7 +31,7 @@ public class ClassificationsFragment extends Fragment {
     public static final String ADD_ELEMENT = "add_customer_classification_item";
     public static final String EDIT_ELEMENT = "remove_customer_classification_item";
 
-    public static final String[] TABLE_HEADERS = {"ID", "Name", "Description"};
+    public static final String[] TABLE_HEADERS = {"Name", "Description"};
 
     private ClassificationsViewModel mViewModel;
     private ClassificationsFragmentBinding binding = null;
@@ -43,13 +43,11 @@ public class ClassificationsFragment extends Fragment {
         binding = ClassificationsFragmentBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(ClassificationsViewModel.class);
 
-        TableColumnWeightModel columnModel = new TableColumnWeightModel(3);
-        columnModel.setColumnWeight(0, 3);
-        columnModel.setColumnWeight(1, 4);
-        columnModel.setColumnWeight(2, 6);
+        TableColumnWeightModel columnModel = new TableColumnWeightModel(2);
+        columnModel.setColumnWeight(0, 1);
+        columnModel.setColumnWeight(1, 2);
         binding.tableView.setColumnModel(columnModel);
-        binding.tableView.setColumnComparator(0, new ClassificationIdComparator());
-        binding.tableView.setColumnComparator(1, new ClassificationNameComparator());
+        binding.tableView.setColumnComparator(0, new ClassificationNameComparator());
         binding.tableView.setEmptyDataIndicatorView(binding.textViewNoData);
         binding.tableView.setHeaderAdapter(new SimpleTableHeaderAdapter(getContext(), TABLE_HEADERS));
 
@@ -126,13 +124,6 @@ public class ClassificationsFragment extends Fragment {
         @Override
         public int compare(CustomerClassification cc1, CustomerClassification cc2) {
             return cc1.getName().compareTo(cc2.getName());
-        }
-    }
-
-    private static class ClassificationIdComparator implements Comparator<CustomerClassification> {
-        @Override
-        public int compare(CustomerClassification cc1, CustomerClassification cc2) {
-            return String.valueOf(cc1.getId()).compareTo(String.valueOf(cc2.getId()));
         }
     }
 }
