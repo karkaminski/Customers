@@ -1,4 +1,4 @@
-package pl.karkaminski.customers.ui.classifications;
+package pl.karkaminski.customers.ui.customersaddedit;
 
 import android.app.Application;
 
@@ -11,24 +11,16 @@ import java.util.List;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.database.CustomersRepository;
 
-public class ClassificationsViewModel extends AndroidViewModel {
+public class AddEditCustomerViewModel extends AndroidViewModel {
 
     private CustomersRepository customersRepository;
 
-    public ClassificationsViewModel(@NonNull Application application) {
+    public AddEditCustomerViewModel(@NonNull Application application) {
         super(application);
         customersRepository = new CustomersRepository(application);
     }
 
     public LiveData<List<CustomerClassification>> getAllCustomerClassifications() {
         return customersRepository.getAllCustomerClassifications();
-    }
-
-    public void insert (CustomerClassification customerClassification) {
-        customersRepository.insert(customerClassification);
-    }
-
-    public void update (CustomerClassification customerClassification){
-        customersRepository.update(customerClassification);
     }
 }

@@ -87,4 +87,8 @@ public class CustomerClassification implements Parcelable{
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
