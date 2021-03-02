@@ -71,5 +71,13 @@
             app:popUpTo="@id/splashScreenFragment"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="pl.karkaminski.customers.ui.login.LoginFragment"
+        android:label="login_fragment"
+        tools:layout="@layout/login_fragment">
+
+    </fragment>
+
 
 </navigation>
