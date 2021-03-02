@@ -10,11 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
 import pl.karkaminski.customers.databinding.ViewPagerFragmentBinding;
 import pl.karkaminski.customers.ui.classifications.ClassificationsFragment;

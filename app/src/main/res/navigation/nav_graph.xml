@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/viewPagerFragment">
+    app:startDestination="@id/splashScreenFragment">
 
 
     <fragment
@@ -57,12 +57,19 @@
             app:destination="@id/addCustomerFragment" />
     </fragment>
 
-
     <fragment
-        android:id="@+id/CustomerClassifications"
-        android:name="pl.karkaminski.customers.ui.classifications.ClassificationsFragment"
-        tools:layout="@layout/classifications_fragment"
-        android:label="classifications_fragment">
+        android:id="@+id/splashScreenFragment"
+        android:name="pl.karkaminski.customers.ui.splash.SplashScreenFragment"
+        android:label="splash_screen_fragment"
+        tools:layout="@layout/splash_screen_fragment">
 
+        <action
+            android:id="@+id/action_splashScreenFragment_to_viewPagerFragment"
+            app:destination="@id/viewPagerFragment"
+            app:launchSingleTop="true"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/splashScreenFragment"/>
     </fragment>
+
+
 </navigation>
