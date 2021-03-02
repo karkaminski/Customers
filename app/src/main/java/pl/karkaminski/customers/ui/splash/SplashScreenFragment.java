@@ -47,9 +47,9 @@ public class SplashScreenFragment extends Fragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
-    }
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        ((AppCompatActivity)getActivity()).getSupportActionBar().show();
+//    }
 }

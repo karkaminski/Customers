@@ -110,6 +110,7 @@ public class AddEditCustomerFragment extends Fragment {
             args = AddEditCustomerFragmentArgs.fromBundle(getArguments());
 
             if (args.getMessage() == CustomersFragment.EDIT_ELEMENT) {
+                binding.buttonDelete.setVisibility(View.VISIBLE);
                 binding.textViewTitle.setText("Edit Customer");
                 customerWithClassificationLiveData.postValue(args.getCustomer());
                 customerToSave = args.getCustomer().getCustomer();
@@ -125,6 +126,7 @@ public class AddEditCustomerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mViewModel.delete(customerToSave);
+                getActivity().onBackPressed();
             }
         });
 
@@ -132,7 +134,6 @@ public class AddEditCustomerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 saveData();
-                getActivity().onBackPressed();
             }
         });
 
