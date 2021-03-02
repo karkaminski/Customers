@@ -20,7 +20,7 @@ public class Customer {
 
     @ForeignKey(entity = CustomerClassification.class, parentColumns = "ClassificationId", childColumns = "ClassificationId", onDelete = ForeignKey.CASCADE)
     @ColumnInfo(name = "ClassificationId")
-    private int classificationId;
+    private Integer classificationId;
 
     @NotNull
     @ColumnInfo(name = "Name")
@@ -88,11 +88,11 @@ public class Customer {
         this.dateTime = dateTime;
     }
 
-    public int getClassificationId() {
+    public Integer getClassificationId() {
         return classificationId;
     }
 
-    public void setClassificationId(int classificationId) {
+    public void setClassificationId(Integer classificationId) {
         this.classificationId = classificationId;
     }
 }

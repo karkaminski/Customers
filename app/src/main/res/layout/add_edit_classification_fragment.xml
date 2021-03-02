@@ -10,6 +10,12 @@
         android:padding="16dp"
         tools:context=".ui.classificationsaddedit.AddEditClassificationFragment">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Customer Category"
+            android:textSize="30dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

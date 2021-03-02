@@ -65,5 +65,7 @@ dependencies {
     implementation "de.codecrafters.tableview:tableview:$table_version"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
+    implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:2.0'
+
 
 }

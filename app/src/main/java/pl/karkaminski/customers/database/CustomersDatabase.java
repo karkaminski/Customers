@@ -67,7 +67,7 @@ public abstract class CustomersDatabase extends RoomDatabase {
             exampleCustomers.add(new Customer(1,"Karol Kamiński", "1111", "Kraków"));
             exampleCustomers.add(new Customer(2,"Jan Kowalski", "2222","Warszawa"));
             exampleCustomers.add(new Customer(3,"Anna Nowak", "3333", "Gdańsk"));
-            exampleCustomers.add(new Customer(18,"Bartos ADamczyk", "9999", "Torun"));
+//            exampleCustomers.add(new Customer(18,"Bartos ADamczyk", "9999", "Torun"));
             Customer customerWithDate = new Customer(3,"Tomasz Kwiatkowski", "6666", "Częstochowa");
             customerWithDate.setDateTime(new Date(System.currentTimeMillis()));
             exampleCustomers.add(customerWithDate);

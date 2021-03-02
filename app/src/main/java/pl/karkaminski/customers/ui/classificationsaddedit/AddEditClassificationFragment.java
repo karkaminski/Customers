@@ -32,10 +32,15 @@ public class AddEditClassificationFragment extends Fragment {
         if (getArguments() != null) {
             args = AddEditClassificationFragmentArgs.fromBundle(getArguments());
             if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
+                binding.textViewTitle.setText("Edit Customer Classification");
                 final CustomerClassification customerClassification;
                 customerClassification = args.getCustomerClassification();
                 binding.editTextName.setText(customerClassification.getName());
                 binding.editTextDescription.setText(customerClassification.getDescription());
+            }
+            if (args.getMessage() == ClassificationsFragment.ADD_ELEMENT) {
+                binding.textViewTitle.setText("Add Customer Classification");
+
             }
         }
 

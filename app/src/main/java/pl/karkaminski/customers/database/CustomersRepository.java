@@ -40,6 +40,10 @@ public class CustomersRepository {
         new InsertCustomersAsyncTask(customerDao).execute(customers);
     }
 
+    public void update(Customer customer){
+        new UpdateCustomerAsyncTask(customerDao).execute(customer);
+    }
+
     ////Async Tasks
     private static class InsertCustomerClassificationsAsyncTask extends AsyncTask<CustomerClassification, Void, Void> {
 
@@ -82,6 +86,21 @@ public class CustomersRepository {
         @Override
         protected Void doInBackground(Customer... customers) {
             dao.insert(customers);
+            return null;
+        }
+    }
+
+    private static class UpdateCustomerAsyncTask extends AsyncTask<Customer, Void, Void> {
+
+        private CustomerDao dao;
+
+        public UpdateCustomerAsyncTask(CustomerDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Customer... customers) {
+            dao.update(customers[0]);
             return null;
         }
     }

@@ -6,6 +6,6 @@ import java.text.SimpleDateFormat;
 
 public class CustomersApplication extends Application {
 
-    public static final SimpleDateFormat globalDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public static final SimpleDateFormat globalDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:MM");
 
 }
