@@ -10,7 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
+import pl.karkaminski.customers.R;
+import pl.karkaminski.customers.authentication.User;
+import pl.karkaminski.customers.authentication.UserViewModel;
 import pl.karkaminski.customers.databinding.ViewPagerFragmentBinding;
 import pl.karkaminski.customers.ui.classifications.ClassificationsFragment;
 import pl.karkaminski.customers.ui.customers.CustomersFragment;
@@ -18,13 +24,21 @@ import pl.karkaminski.customers.ui.customers.CustomersFragment;
 public class ViewPagerFragment extends Fragment {
 
     ViewPagerFragmentBinding binding = null;
+    private UserViewModel userViewModel;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         binding = ViewPagerFragmentBinding.inflate(inflater, container, false);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
+
+        userViewModel.user().observe(getViewLifecycleOwner(), (Observer<User>) user -> {
+            if (user == null) {
+                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(R.id.loginFragment);
+            }
+        });
 
         binding.viewPager.setAdapter(new FragmentStatePagerAdapter(getFragmentManager()) {
             @NonNull
