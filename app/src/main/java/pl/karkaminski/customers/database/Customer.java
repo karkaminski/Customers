@@ -46,6 +46,14 @@ public class Customer {
         this.city = city;
     }
 
+    public Customer(Integer classificationId, @NotNull String name, String nip, String city, Date dateTime) {
+        this.classificationId = classificationId;
+        this.name = name;
+        this.nip = nip;
+        this.city = city;
+        this.dateTime = dateTime;
+    }
+
     public int getId() {
         return id;
     }

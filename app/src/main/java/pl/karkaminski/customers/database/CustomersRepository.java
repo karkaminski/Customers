@@ -44,6 +44,10 @@ public class CustomersRepository {
         new UpdateCustomerAsyncTask(customerDao).execute(customer);
     }
 
+    public void delete(Customer... customers) {
+        new DeleteCustomerAsyncTask(customerDao).execute(customers);
+    }
+
     ////Async Tasks
     private static class InsertCustomerClassificationsAsyncTask extends AsyncTask<CustomerClassification, Void, Void> {
 
@@ -101,6 +105,21 @@ public class CustomersRepository {
         @Override
         protected Void doInBackground(Customer... customers) {
             dao.update(customers[0]);
+            return null;
+        }
+    }
+
+    private static class DeleteCustomerAsyncTask extends AsyncTask<Customer, Void, Void> {
+
+        private CustomerDao dao;
+
+        public DeleteCustomerAsyncTask(CustomerDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Customer... customers) {
+            dao.delete(customers);
             return null;
         }
     }

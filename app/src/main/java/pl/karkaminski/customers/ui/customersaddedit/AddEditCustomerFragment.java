@@ -68,7 +68,7 @@ public class AddEditCustomerFragment extends Fragment {
                         binding.editTextName.setText(customerWithClassification.getCustomer().getName());
                     }
                     //Setup Classification EditText
-                    if (customerWithClassification.getCustomer().getClassificationId() != null ) {
+                    if (customerWithClassification.getCustomer().getClassificationId() != null) {
                         binding.spinnerTextView.setText(customerWithClassification.getCustomerClassification().getName(), false);
                     }
 
@@ -121,10 +121,18 @@ public class AddEditCustomerFragment extends Fragment {
             }
         }
 
+        binding.buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mViewModel.delete(customerToSave);
+            }
+        });
+
         binding.buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveData();
+                getActivity().onBackPressed();
             }
         });
 
@@ -207,6 +215,4 @@ public class AddEditCustomerFragment extends Fragment {
         }
         getActivity().onBackPressed();
     }
-
-
-};
+}

@@ -34,7 +34,7 @@ public class SharedViewModel extends AndroidViewModel {
         customersRepository.insert(customerClassification);
     }
 
-    public void update(CustomerClassification customerClassification){
+    public void update(CustomerClassification customerClassification) {
         customersRepository.update(customerClassification);
     }
 
@@ -44,5 +44,9 @@ public class SharedViewModel extends AndroidViewModel {
 
     public void update(Customer customer) {
         customersRepository.update(customer);
+    }
+
+    public void delete(Customer customer) {
+        customersRepository.delete(customer);
     }
 }

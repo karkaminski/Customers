@@ -11,6 +11,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 @Database(entities = {CustomerClassification.class, Customer.class}, version = 1)
@@ -64,13 +65,23 @@ public abstract class CustomersDatabase extends RoomDatabase {
             exampleClassifications.add(new CustomerClassification("Poker player buyer", "These are relationship or value buyers who have learned that if they act like a price buyer, they can get high value for low prices."));
             classificationDao.insert(exampleClassifications.toArray(new CustomerClassification[exampleClassifications.size()]));
 
-            exampleCustomers.add(new Customer(1,"Karol Kamiński", "1111", "Kraków"));
-            exampleCustomers.add(new Customer(2,"Jan Kowalski", "2222","Warszawa"));
-            exampleCustomers.add(new Customer(3,"Anna Nowak", "3333", "Gdańsk"));
-//            exampleCustomers.add(new Customer(18,"Bartos ADamczyk", "9999", "Torun"));
-            Customer customerWithDate = new Customer(3,"Tomasz Kwiatkowski", "6666", "Częstochowa");
-            customerWithDate.setDateTime(new Date(System.currentTimeMillis()));
-            exampleCustomers.add(customerWithDate);
+//                 * replaced by <code>Calendar.set(year + 1900, month, date)</code>
+
+            Calendar calendar = Calendar.getInstance();
+
+            exampleCustomers.add(new Customer(1, "Karol Kamiński", "1890213403", "Kraków", new Date(System.currentTimeMillis())));
+            calendar.set(Calendar.YEAR, 2020);
+            calendar.set(Calendar.DAY_OF_MONTH, 20);
+            calendar.set(Calendar.MONTH, 11);
+            exampleCustomers.add(new Customer(2,"Jan Kowalski", "7788236409","Warszawa", new Date(calendar.getTimeInMillis())));
+            calendar.set(Calendar.YEAR, 2018);
+            calendar.set(Calendar.DAY_OF_MONTH, 10);
+            calendar.set(Calendar.MONTH, 06);
+            exampleCustomers.add(new Customer(3,"Anna Nowak", "9234095834", "Gdańsk", new Date(calendar.getTimeInMillis())));
+            calendar.set(Calendar.YEAR, 2021);
+            calendar.set(Calendar.DAY_OF_MONTH, 03);
+            calendar.set(Calendar.MONTH, 01);
+            exampleCustomers.add(new Customer(4,"Andrzej Duda", "8098346821", "Kraków", new Date(calendar.getTimeInMillis())));
             customerDao.insert(exampleCustomers.toArray(new Customer[exampleCustomers.size()]));
             return null;
         }
