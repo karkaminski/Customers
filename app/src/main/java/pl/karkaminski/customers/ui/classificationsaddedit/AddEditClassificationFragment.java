@@ -63,10 +63,10 @@ public class AddEditClassificationFragment extends Fragment {
 
         if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
             cc.setId(args.getCustomerClassification().getId());
-            mViewModel.updateClassification(cc);
+            mViewModel.update(cc);
         }
         if (args.getMessage() == ClassificationsFragment.ADD_ELEMENT) {
-            mViewModel.insertClassification(cc);
+            mViewModel.insert(cc);
         }
         getActivity().onBackPressed();
     }

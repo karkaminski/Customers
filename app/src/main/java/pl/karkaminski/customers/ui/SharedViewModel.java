@@ -22,10 +22,6 @@ public class SharedViewModel extends AndroidViewModel {
         customersRepository = new CustomersRepository(application);
     }
 
-    public LiveData<List<Customer>> getAllCustomers(){
-        return customersRepository.getAllCustomers();
-    }
-
     public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
         return customersRepository.getAllCustomersWithClassification();
     }
@@ -34,11 +30,15 @@ public class SharedViewModel extends AndroidViewModel {
         return customersRepository.getAllCustomerClassifications();
     }
 
-    public void insertClassification(CustomerClassification customerClassification) {
+    public void insert(CustomerClassification customerClassification) {
         customersRepository.insert(customerClassification);
     }
 
-    public void updateClassification(CustomerClassification customerClassification){
+    public void update(CustomerClassification customerClassification){
         customersRepository.update(customerClassification);
+    }
+
+    public void insert(Customer customer) {
+        customersRepository.insert(customer);
     }
 }

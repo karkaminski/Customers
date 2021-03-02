@@ -18,5 +18,4 @@ public interface CustomerDao {
 
     @Insert
     void insert(Customer... customers);
-
-}
+    }

@@ -98,20 +98,6 @@ public class CustomersFragment extends Fragment {
             }
         });
 
-        getParentFragmentManager().setFragmentResultListener(ADD_ELEMENT, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                //TODO add element
-            }
-        });
-
-        getParentFragmentManager().setFragmentResultListener(EDIT_ELEMENT, this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                //TODO Edit element
-            }
-        });
-
         return binding.getRoot();
     }
 

@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import pl.karkaminski.customers.CustomersApplication;
+import pl.karkaminski.customers.database.Customer;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.database.CustomerWithClassification;
 import pl.karkaminski.customers.databinding.AddEditClassificationFragmentBinding;
@@ -41,12 +43,14 @@ public class AddEditCustomerFragment extends Fragment {
 
     DatePickerDialog picker;
 
+    private CustomerWithClassification customerWithClassification;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = AddEditCustomerFragmentBinding.inflate(inflater, container, false);
         mViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-
 
         List<CustomerClassification> customerClassifications = new ArrayList<>();
         ArrayAdapter<CustomerClassification> adapter = new ArrayAdapter<>(
@@ -63,15 +67,6 @@ public class AddEditCustomerFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customerClassifications);
                 adapter.notifyDataSetChanged();
-            }
-        });
-
-        binding.buttonAddClassification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddEditCustomerFragmentDirections.ActionAddCustomerFragmentToAddClassificationFragment action =
-                        AddEditCustomerFragmentDirections.actionAddCustomerFragmentToAddClassificationFragment(null);
-                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
             }
         });
 
@@ -98,7 +93,6 @@ public class AddEditCustomerFragment extends Fragment {
         });
 
 
-        CustomerWithClassification customerWithClassification;
         if (getArguments() != null) {
 
             args = AddEditCustomerFragmentArgs.fromBundle(getArguments());
@@ -108,11 +102,36 @@ public class AddEditCustomerFragment extends Fragment {
                 binding.editTextName.setText(customerWithClassification.getCustomer().getName());
                 binding.editTextNip.setText(customerWithClassification.getCustomer().getNip());
                 binding.editTextCity.setText(customerWithClassification.getCustomer().getCity());
+
+                final Date dateTime = customerWithClassification.getCustomer().getDateTime();
+                final String dateString = CustomersApplication.globalDateFormat.format(dateTime);
+                binding.editTextDate.setText(dateString);
             }
         }
 
+        binding.buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveData();
+            }
+        });
 
         return binding.getRoot();
+    }
+
+    private void saveData() {
+        String name = binding.editTextName.getText().toString();
+        String nip = binding.editTextNip.getText().toString();
+        String city = binding.editTextCity.getText().toString();
+
+        final Customer customer = new Customer();
+        customer.setName(name);
+        customer.setNip(nip);
+        customer.setCity(city);
+
+        mViewModel.insert(customer);
+        getActivity().onBackPressed();
+
     }
 
 

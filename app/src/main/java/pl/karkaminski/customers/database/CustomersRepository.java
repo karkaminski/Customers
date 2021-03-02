@@ -32,10 +32,6 @@ public class CustomersRepository {
     }
 
     ////Customers
-    public LiveData<List<Customer>> getAllCustomers() {
-        return customerDao.getAll();
-    }
-
     public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
         return customerDao.getAllWithClassification();
     }
