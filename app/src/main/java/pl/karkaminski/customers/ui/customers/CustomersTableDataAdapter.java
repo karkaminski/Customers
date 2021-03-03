@@ -23,6 +23,7 @@ public class CustomersTableDataAdapter extends TableDataAdapter<CustomerWithClas
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
         final TextView textView = new TextView(getContext());
+        textView.setPadding(0,20,0,20);
 
         switch (columnIndex) {
             case 0:

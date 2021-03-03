@@ -26,10 +26,12 @@
 
             <de.codecrafters.tableview.SortableTableView
                 android:id="@+id/table_view"
+                xmlns:table="http://schemas.android.com/apk/res-auto"
                 android:contextClickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tableView_columnCount="2" />
+                app:tableView_columnCount="2"
+                table:tableView_headerColor="@color/design_default_color_secondary"/>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

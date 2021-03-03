@@ -19,6 +19,7 @@ public class CustomerClassificationTableDataAdapter extends TableDataAdapter<Cus
     @Override
     public View getCellView(int rowIndex, int columnIndex, ViewGroup parentView) {
         final TextView textView = new TextView(getContext());
+        textView.setPadding(0,20,0,20);
 
         switch (columnIndex) {
             case 0:
