@@ -34,13 +34,20 @@ public class LoginFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        binding.buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = binding.editTextUsername.getText().toString();
-                String password = binding.editTextPassword.getText().toString();
-                login(username, password);
+        Observer<LoginResult> observer = loginResult -> {
+            if (loginResult == LoginResult.SUCCESS) {
+                savedStateHandle.set(LOGIN_SUCCESSFUL, true);
+                NavHostFragment.findNavController(getParentFragment()).popBackStack();
+            } else {
+                showErrorMessage();
             }
+        };
+
+        binding.buttonLogin.setOnClickListener((View.OnClickListener) v -> {
+            String username = binding.editTextUsername.getText().toString();
+            String password = binding.editTextPassword.getText().toString();
+            userViewModel.login(username, password).observe(getViewLifecycleOwner(), observer);
+
         });
         return binding.getRoot();
     }
@@ -55,19 +62,9 @@ public class LoginFragment extends Fragment {
         savedStateHandle.set(LOGIN_SUCCESSFUL, false);
     }
 
-    private void login (String username, String password) {
-        userViewModel.login(username, password).observe(getViewLifecycleOwner(), (Observer<LoginResult>) result -> {
-            if (result.isSuccess()) {
-                savedStateHandle.set(LOGIN_SUCCESSFUL, true);
-                NavHostFragment.findNavController(this).popBackStack();
-            } else {
-                showErrorMessage();
-            }
-        });
-    }
+    private void showErrorMessage() {
+        Toast.makeText(getContext(), "Wrong password or username", Toast.LENGTH_SHORT).show();
 
-    private void showErrorMessage(){
-        Toast.makeText(requireContext(), "ERROR", Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -31,7 +31,7 @@ public class SplashScreenFragment extends Fragment {
                 NavDirections action = SplashScreenFragmentDirections.actionSplashScreenFragmentToViewPagerFragment();
                 NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
             }
-        }, 3000);
+        }, 1500);
 
         binding.buttonStart.setOnClickListener(v -> {
             NavDirections action = SplashScreenFragmentDirections.actionSplashScreenFragmentToViewPagerFragment();
