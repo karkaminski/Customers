@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,7 +23,6 @@ import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
 import pl.karkaminski.customers.databinding.ClassificationsFragmentBinding;
 import pl.karkaminski.customers.ui.SharedViewModel;
-import pl.karkaminski.customers.ui.classificationsaddedit.AddEditClassificationFragment;
 import pl.karkaminski.customers.ui.mainview.ViewPagerFragmentDirections;
 
 public class ClassificationsFragment extends Fragment {
