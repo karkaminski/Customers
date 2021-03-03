@@ -38,6 +38,10 @@ public class SharedViewModel extends AndroidViewModel {
         customersRepository.update(customerClassification);
     }
 
+    public void delete(CustomerClassification customerClassification) {
+        customersRepository.delete(customerClassification);
+    }
+
     public void insert(Customer customer) {
         customersRepository.insert(customer);
     }

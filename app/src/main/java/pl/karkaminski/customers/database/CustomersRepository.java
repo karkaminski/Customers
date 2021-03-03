@@ -31,6 +31,10 @@ public class CustomersRepository {
         new UpdateCustomerClassificationsAsyncTask(customerClassificationDao).execute(customerClassification);
     }
 
+    public void delete(CustomerClassification... customerClassification) {
+        new DeleteCustomerClassificationsAsyncTask(customerClassificationDao).execute(customerClassification);
+    }
+
     ////Customers
     public LiveData<List<CustomerWithClassification>> getAllCustomersWithClassification() {
         return customerDao.getAllWithClassification();
@@ -48,7 +52,7 @@ public class CustomersRepository {
         new DeleteCustomerAsyncTask(customerDao).execute(customers);
     }
 
-    ////Async Tasks
+    //////CLASSIFICATIONS ASYNC TASKS starts here///////
     private static class InsertCustomerClassificationsAsyncTask extends AsyncTask<CustomerClassification, Void, Void> {
 
         private CustomerClassificationDao dao;
@@ -78,6 +82,23 @@ public class CustomersRepository {
             return null;
         }
     }
+
+    private static class DeleteCustomerClassificationsAsyncTask extends AsyncTask<CustomerClassification, Void, Void> {
+
+        private CustomerClassificationDao dao;
+
+        public DeleteCustomerClassificationsAsyncTask(CustomerClassificationDao dao) {
+            this.dao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(CustomerClassification... customerClassifications) {
+            dao.delete(customerClassifications[0]);
+            return null;
+        }
+    }
+
+    //////CUSTOMERS ASYNC TASKS starts here///////
 
     private static class InsertCustomersAsyncTask extends AsyncTask<Customer, Void, Void> {
 

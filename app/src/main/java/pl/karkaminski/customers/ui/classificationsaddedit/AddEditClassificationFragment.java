@@ -22,6 +22,8 @@ public class AddEditClassificationFragment extends Fragment {
     private AddEditClassificationFragmentArgs args;
     private SharedViewModel mViewModel;
 
+    private CustomerClassification classificationTemp = new CustomerClassification();
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -33,22 +35,22 @@ public class AddEditClassificationFragment extends Fragment {
             args = AddEditClassificationFragmentArgs.fromBundle(getArguments());
             if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
                 binding.textViewTitle.setText("Edit Customer Classification");
-                final CustomerClassification customerClassification;
-                customerClassification = args.getCustomerClassification();
-                binding.editTextName.setText(customerClassification.getName());
-                binding.editTextDescription.setText(customerClassification.getDescription());
+                binding.buttonDelete.setVisibility(View.VISIBLE);
+                classificationTemp = args.getCustomerClassification();
+                binding.editTextName.setText(classificationTemp.getName());
+                binding.editTextDescription.setText(classificationTemp.getDescription());
             }
             if (args.getMessage() == ClassificationsFragment.ADD_ELEMENT) {
+                binding.buttonDelete.setVisibility(View.GONE);
                 binding.textViewTitle.setText("Add Customer Classification");
-
             }
         }
 
-        binding.buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                saveData();
-            }
+        binding.buttonSave.setOnClickListener(view -> saveData());
+
+        binding.buttonDelete.setOnClickListener(v -> {
+            mViewModel.delete(classificationTemp);
+            getActivity().onBackPressed();
         });
         return binding.getRoot();
     }
@@ -62,16 +64,15 @@ public class AddEditClassificationFragment extends Fragment {
             return;
         }
 
-        final CustomerClassification cc = new CustomerClassification();
-        cc.setName(name);
-        cc.setDescription(description);
+        classificationTemp.setName(name);
+        classificationTemp.setDescription(description);
 
         if (args.getMessage() == ClassificationsFragment.EDIT_ELEMENT) {
-            cc.setId(args.getCustomerClassification().getId());
-            mViewModel.update(cc);
+            classificationTemp.setId(args.getCustomerClassification().getId());
+            mViewModel.update(classificationTemp);
         }
         if (args.getMessage() == ClassificationsFragment.ADD_ELEMENT) {
-            mViewModel.insert(cc);
+            mViewModel.insert(classificationTemp);
         }
         getActivity().onBackPressed();
     }

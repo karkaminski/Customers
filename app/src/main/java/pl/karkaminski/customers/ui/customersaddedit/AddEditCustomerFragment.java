@@ -43,7 +43,7 @@ public class AddEditCustomerFragment extends Fragment {
 
     private MutableLiveData<CustomerWithClassification> customerWithClassificationLiveData =
             new MutableLiveData<>(new CustomerWithClassification());
-    private Customer customerToSave = new Customer();
+    private Customer customerTemp = new Customer();
 
 
     private static final String TAG_DATETIME_FRAGMENT = "TAG_DATETIME_FRAGMENT";
@@ -58,36 +58,33 @@ public class AddEditCustomerFragment extends Fragment {
         setupSpinner();
 
 
-        customerWithClassificationLiveData.observe(getViewLifecycleOwner(), new Observer<CustomerWithClassification>() {
-            @Override
-            public void onChanged(CustomerWithClassification customerWithClassification) {
-                if (customerWithClassification.getCustomer() != null) {
+        customerWithClassificationLiveData.observe(getViewLifecycleOwner(), customerWithClassification -> {
+            if (customerWithClassification.getCustomer() != null) {
 
-                    //Setup Name EditText
-                    if (customerWithClassification.getCustomer().getName() != null) {
-                        binding.editTextName.setText(customerWithClassification.getCustomer().getName());
-                    }
-                    //Setup Classification EditText
-                    if (customerWithClassification.getCustomer().getClassificationId() != null) {
-                        binding.spinnerTextView.setText(customerWithClassification.getCustomerClassification().getName(), false);
-                    }
+                //Setup Name EditText
+                if (customerWithClassification.getCustomer().getName() != null) {
+                    binding.editTextName.setText(customerWithClassification.getCustomer().getName());
+                }
+                //Setup Classification EditText
+                if (customerWithClassification.getCustomer().getClassificationId() != null && customerWithClassification.getCustomerClassification() != null) {
+                    binding.spinnerTextView.setText(customerWithClassification.getCustomerClassification().getName(), false);
+                }
 
-                    //Setup NIP EditText
-                    if (customerWithClassification.getCustomer().getNip() != null) {
-                        binding.editTextNip.setText(customerWithClassification.getCustomer().getNip());
-                    }
+                //Setup NIP EditText
+                if (customerWithClassification.getCustomer().getNip() != null) {
+                    binding.editTextNip.setText(customerWithClassification.getCustomer().getNip());
+                }
 
-                    //Setup City EditText
-                    if (customerWithClassification.getCustomer().getCity() != null) {
-                        binding.editTextCity.setText(customerWithClassification.getCustomer().getCity());
-                    }
+                //Setup City EditText
+                if (customerWithClassification.getCustomer().getCity() != null) {
+                    binding.editTextCity.setText(customerWithClassification.getCustomer().getCity());
+                }
 
-                    //Setup Date EditText
-                    if (customerWithClassification.getCustomer().getDateTime() != null) {
-                        final Date date = customerWithClassification.getCustomer().getDateTime();
-                        final String dateString = CustomersApplication.globalDateFormat.format(date);
-                        binding.editTextDate.setText(dateString);
-                    }
+                //Setup Date EditText
+                if (customerWithClassification.getCustomer().getDateTime() != null) {
+                    final Date date = customerWithClassification.getCustomer().getDateTime();
+                    final String dateString = CustomersApplication.globalDateFormat.format(date);
+                    binding.editTextDate.setText(dateString);
                 }
             }
         });
@@ -95,48 +92,36 @@ public class AddEditCustomerFragment extends Fragment {
         setupDateTimePicker();
 
         binding.editTextDate.setInputType(InputType.TYPE_NULL);
-        binding.editTextDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                final Date date = calendar.getTime();
-                dateTimeFragment.startAtCalendarView();
-                dateTimeFragment.setDefaultDateTime(date);
-                dateTimeFragment.show(getParentFragmentManager(), TAG_DATETIME_FRAGMENT);
-            }
+        binding.editTextDate.setOnClickListener(v -> {
+            final Calendar calendar = Calendar.getInstance();
+            final Date date = calendar.getTime();
+            dateTimeFragment.startAtCalendarView();
+            dateTimeFragment.setDefaultDateTime(date);
+            dateTimeFragment.show(getParentFragmentManager(), TAG_DATETIME_FRAGMENT);
         });
 
         if (getArguments() != null) {
             args = AddEditCustomerFragmentArgs.fromBundle(getArguments());
 
             if (args.getMessage() == CustomersFragment.EDIT_ELEMENT) {
-                binding.buttonDelete.setVisibility(View.VISIBLE);
                 binding.textViewTitle.setText("Edit Customer");
+                binding.buttonDelete.setVisibility(View.VISIBLE);
                 customerWithClassificationLiveData.postValue(args.getCustomer());
-                customerToSave = args.getCustomer().getCustomer();
+                customerTemp = args.getCustomer().getCustomer();
             }
 
             if (args.getMessage() == CustomersFragment.ADD_ELEMENT) {
                 binding.textViewTitle.setText("Add Customer");
-
+                binding.buttonDelete.setVisibility(View.GONE);
             }
         }
 
-        binding.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.delete(customerToSave);
-                getActivity().onBackPressed();
-            }
-        });
+        binding.buttonSave.setOnClickListener(v -> saveData());
 
-        binding.buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveData();
-            }
+        binding.buttonDelete.setOnClickListener(v -> {
+            mViewModel.delete(customerTemp);
+            getActivity().onBackPressed();
         });
-
         return binding.getRoot();
     }
 
@@ -155,7 +140,7 @@ public class AddEditCustomerFragment extends Fragment {
         dateTimeFragment.setOnButtonClickListener(new SwitchDateTimeDialogFragment.OnButtonClickListener() {
             @Override
             public void onPositiveButtonClick(Date date) {
-                customerToSave.setDateTime(date);
+                customerTemp.setDateTime(date);
                 final String dateString = CustomersApplication.globalDateFormat.format(date);
                 binding.editTextDate.setText(dateString);
 
@@ -183,13 +168,17 @@ public class AddEditCustomerFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(customerClassifications);
                 adapter.notifyDataSetChanged();
+                if (!(customerClassifications.size()>0)){
+                    binding.spinnerTextView.setEnabled(false);
+                    binding.spinnerTextView.setText("[no classifications available]");
+                }
             }
         });
 
         binding.spinnerTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                customerToSave.setClassificationId(customerClassifications.get(position).getId());
+                customerTemp.setClassificationId(customerClassifications.get(position).getId());
             }
         });
     }
@@ -204,15 +193,15 @@ public class AddEditCustomerFragment extends Fragment {
             return;
         }
 
-        customerToSave.setName(name);
-        customerToSave.setNip(nip);
-        customerToSave.setCity(city);
+        customerTemp.setName(name);
+        customerTemp.setNip(nip);
+        customerTemp.setCity(city);
 
         if (args.getMessage() == CustomersFragment.EDIT_ELEMENT) {
-            mViewModel.update(customerToSave);
+            mViewModel.update(customerTemp);
         }
         if (args.getMessage() == CustomersFragment.ADD_ELEMENT) {
-            mViewModel.insert(customerToSave);
+            mViewModel.insert(customerTemp);
         }
         getActivity().onBackPressed();
     }
