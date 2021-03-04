@@ -17,7 +17,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.codecrafters.tableview.listeners.TableDataClickListener;
-import de.codecrafters.tableview.listeners.TableDataLongClickListener;
 import de.codecrafters.tableview.model.TableColumnWeightModel;
 import de.codecrafters.tableview.toolkit.SimpleTableHeaderAdapter;
 import pl.karkaminski.customers.database.CustomerClassification;
@@ -63,34 +62,20 @@ public class ClassificationsFragment extends Fragment {
             }
         });
 
-        binding.floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
-                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(null);
-                action.setMessage(ADD_ELEMENT);
+        binding.floatingActionButton.setOnClickListener(view -> {
+            ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
+                    ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(null);
+            action.setMessage(ADD_ELEMENT);
 
-                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
-            }
+            NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
         });
 
-        binding.tableView.addDataLongClickListener(new TableDataLongClickListener<CustomerClassification>() {
-            @Override
-            public boolean onDataLongClicked(int rowIndex, CustomerClassification clickedData) {
-                ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
-                        ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(clickedData);
-                action.setMessage(EDIT_ELEMENT);
+        binding.tableView.addDataClickListener((TableDataClickListener<CustomerClassification>) (rowIndex, clickedData) -> {
+            ViewPagerFragmentDirections.ActionViewPagerFragmentToAddClassificationFragment action =
+                    ViewPagerFragmentDirections.actionViewPagerFragmentToAddClassificationFragment(clickedData);
+            action.setMessage(EDIT_ELEMENT);
 
-                NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
-                return true;
-            }
-        });
-
-        binding.tableView.addDataClickListener(new TableDataClickListener<CustomerClassification>() {
-            @Override
-            public void onDataClicked(int rowIndex, CustomerClassification clickedData) {
-                //TODO ??? Show details of CustomerClassification ???
-            }
+            NavHostFragment.findNavController(getParentFragmentManager().getPrimaryNavigationFragment()).navigate(action);
         });
 
         return binding.getRoot();
